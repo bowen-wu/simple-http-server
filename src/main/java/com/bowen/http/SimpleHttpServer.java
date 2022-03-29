@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.Instant;
 
 public class SimpleHttpServer {
     public static void main(String[] args) throws IOException {
@@ -15,6 +16,7 @@ public class SimpleHttpServer {
         // 绑定 port
         serverSocket.bind(new InetSocketAddress("127.0.0.1", port));
 
+        // Listener 阻塞
         Socket socket = serverSocket.accept();
         System.out.println(socket);
 
@@ -35,12 +37,15 @@ public class SimpleHttpServer {
 
         // HTTP response header
         socket.getOutputStream().write("HTTP/1.1 200 OK\r\n".getBytes());
+        socket.getOutputStream().write("content-type: text/html\r\n".getBytes());
+//        socket.getOutputStream().write("content-type: text/plain\r\n".getBytes());
+//        socket.getOutputStream().write("content-disposition: attachment;filename=123.txt\r\n".getBytes());
 
         // HTTP response header/body 分割符
         socket.getOutputStream().write("\r\n".getBytes());
 
         // HTTP response body
-        socket.getOutputStream().write("Hello!".getBytes());
+        socket.getOutputStream().write(("<html><h1>Hello</h1><p>World!</p>" + Instant.now() + "</html>").getBytes());
 
         // submit
         socket.getOutputStream().flush();
