@@ -101,7 +101,7 @@ public class SimpleHttpServer {
 
     private static void setHeader(Socket socket, String resourceName) throws IOException {
         if (isFile(resourceName, ".js")) {
-            socket.getOutputStream().write("content-type: text/javascript\r\n".getBytes());
+            socket.getOutputStream().write("content-type: text/javascript; charset=utf8\r\n".getBytes());
         } else if (isFile(resourceName, ".css")) {
             socket.getOutputStream().write("content-type: text/css\r\n".getBytes());
         } else if (isFile(resourceName, ".jpeg")) {
