@@ -42,7 +42,7 @@ public class SimpleHttpServer {
 
             // HTTP response header
             socket.getOutputStream().write("HTTP/1.1 200 OK\r\n".getBytes());
-            if (resource.endsWith(".js")) {
+            if (resource.endsWith(".js") || resource.endsWith(".css")) {
                 socket.getOutputStream().write("content-type: text/javascript\r\n".getBytes());
 
                 // HTTP response header/body 分割符
@@ -67,7 +67,11 @@ public class SimpleHttpServer {
                 // HTTP response body
                 socket.getOutputStream().write(("<html>" +
                         "<script src='/myScript.js'></script>" +
-                        "<h1>Hello</h1><p>World!</p>" +
+                        "<link href='style.css' rel='stylesheet'>" +
+                        "<h1>Hello</h1>" +
+                        "<p>World!</p>" +
+                        "<div>Text</div>" +
+                        "<div class='text'>Text with class</div>" +
                         Instant.now() +
                         "</html>").getBytes());
 
